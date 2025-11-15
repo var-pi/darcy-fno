@@ -22,7 +22,10 @@ def plot_single_example_all_resolutions(model, test_loaders, data_processor, dev
 		# We'll take the first example in each resolution
 		for col_idx, res_idx in enumerate(test_loaders):
 			test_loader = test_loaders[res_idx]
-			sample = next(iter(test_loader))  # take first batch
+			it = iter(test_loader)
+			next(it)
+			next(it)
+			sample = next(it)  # take first batch
 
 			x = sample['x'][0:1].to(device)  # take first example in batch
 			x = data_processor.in_normalizer.transform(x)

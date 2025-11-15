@@ -17,9 +17,9 @@ def main():
 	train_loader, test_loaders, data_processor = load_darcy_flow_small(
 		n_train=1000,
 		batch_size=12,
-		n_tests=[100, 100, 100, 100],
-		test_resolutions=[16, 32, 64, 128],
-		test_batch_sizes=[12, 12, 12, 12],
+		n_tests=[100],
+		test_resolutions=[16],
+		test_batch_sizes=[12],
 		encode_input=True,
 		encode_output=True,
 	)
@@ -31,7 +31,7 @@ def main():
 
 	# Define loss functions
 	train_loss = lambda output, **sample: nn.MSELoss()(output, sample['y'])
-	eval_losses = {'mse': train_loss}
+	eval_losses = {'mse': mse, 'pi_mse': train_loss}
 
 	# Create the trainer
 	trainer = Trainer(
@@ -52,7 +52,7 @@ def main():
 		eval_losses=eval_losses,
 	)
 
-	model.save_checkpoint(save_folder='./models', save_name='example_fno')	
+	model.save_checkpoint(save_folder='./models', save_name='physics_informed_fno')	
 
 if __name__ == "__main__":
     main()
