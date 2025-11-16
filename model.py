@@ -31,7 +31,7 @@ def main():
 
 	# Define loss functions
 	train_loss = lambda output, **sample: nn.MSELoss()(output, sample['y'])
-	eval_losses = {'mse': mse, 'pi_mse': train_loss}
+	eval_losses = {'mse': train_loss,}
 
 	# Create the trainer
 	trainer = Trainer(
